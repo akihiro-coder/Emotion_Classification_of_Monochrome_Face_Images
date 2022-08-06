@@ -9,10 +9,20 @@ from tensorflow.keras import layers
 import matplotlib.pyplot as plt
 from tensorflow.keras.optimizers import Adam
 import random
+from keras.preprocessing.image import ImageDataGenerator
 
 
 
-# make train images to numpy array
+# data augumentation
+train_data_dir = './data/train'
+test_data_dir = './data/test'
+
+
+
+
+
+
+# load train images and convert to numpy array
 data_dir = './data/train'
 search_pattern = '*.jpg'
 images = []
@@ -23,7 +33,7 @@ for image_path in glob.glob(os.path.join(data_dir, search_pattern)):
 train_images = np.concatenate(images, axis=0)  # train data (312, 120, 128, 3)
 
 
-# make train data labels
+# train data labels
 train = pd.read_csv('./data/train_master.tsv', sep='\t')
 train_labels_list = train['expression'].tolist()
 train_labels = []
