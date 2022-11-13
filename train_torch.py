@@ -20,30 +20,37 @@ print(device)
 
 
 # define preprocessing
-
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Resize((128, 128))
+])
 
 
 # prepare dataset
+train_dataset = datasets.ImageFolder('./data/train/label', transform=transform)
 
-
-
-# prepare dataloader 
-
-
+# prepare dataloader
+batch_size = 32
+train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
 # label name
-
-
+emotion_name = ('sad', 'angry', 'neutral', 'happy')
 
 # 画像の確認(get images and labels from dataloader)
-
-
-
+#data_iter = iter(train_dataloader)
+#imgs, labels = data_iter.next()
+#img = imgs[0]
+#label = labels[0]
+#print(label)
+#save_image(img, 'first_img.png')
 
 
 # define model structure
+class CNN(nn.Module):
+    def __init__(self, num_classes):
+        super().__init()
 
-
+        
 
 # define criterion
 
@@ -51,18 +58,10 @@ print(device)
 # define optimizer
 
 
-
-# train loop 
-
-
-# validation loop 
+# train loop
 
 
+# validation loop
 
 
 # graph result
-
-
-
-
-
