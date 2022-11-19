@@ -37,13 +37,13 @@ train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True
 emotion_name = ('sad', 'angry', 'neutral', 'happy')
 
 # 画像の確認(get images and labels from dataloader)
-#data_iter = iter(train_dataloader)
-#imgs, labels = data_iter.next()
-#img = imgs[0]
-#label = labels[0]
-#print(label)
-#save_image(img, 'first_img.png')
-
+data_iter = iter(train_dataloader)
+imgs, labels = data_iter.next()
+img = imgs[0]
+label = labels[0]
+print(label)
+save_image(img, 'first_img.png')
+exit()
 
 # define model structure
 class CNN(nn.Module):
