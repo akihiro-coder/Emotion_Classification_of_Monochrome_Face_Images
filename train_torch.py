@@ -36,19 +36,23 @@ train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True
 # label name
 emotion_name = ('sad', 'angry', 'neutral', 'happy')
 
-# 画像の確認(get images and labels from dataloader)
-data_iter = iter(train_dataloader)
-imgs, labels = data_iter.next()
-img = imgs[0]
-label = labels[0]
-print(label)
-save_image(img, 'first_img.png')
-exit()
+# train dataloader
+
+# validation dataloader
+
 
 # define model structure
 class CNN(nn.Module):
     def __init__(self, num_classes):
-        super().__init()
+        super().__init__()
+
+        # 特徴抽出層
+        self.features = nn.Sequential(
+                nn.Conv2D(in_channels=1, out_channels=64, kernel_size=5, padding=2),
+                nn.ReLU(inplace=True),
+                nn.MaxPooling2D(kernel_size=2),
+
+                )
 
         
 
