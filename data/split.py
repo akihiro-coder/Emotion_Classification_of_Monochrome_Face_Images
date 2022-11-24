@@ -11,8 +11,8 @@ label_list = data_csv['expression'].tolist()
 id_list = data_csv['id'].tolist()
 
 # 画像を指定のフォルダに分ける
-data_path = './train_cp'
-data_label_path = './train_cp/label'
+data_path = './train'
+data_label_path = './train/label'
 for id_, label in enumerate(label_list):
     src_path = os.path.join(data_path, id_list[id_])
     dst_path = os.path.join(data_label_path, label)
