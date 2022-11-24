@@ -3,17 +3,6 @@ import shutil
 import pandas as pd
 
 
-# フォルダを作る
-#new_dir_path = './data/train/label'
-#os.mkdir(new_dir_path)
-#sad_dir_path = './data/train/label/sad'
-#angry_dir_path = './data/train/label/angry'
-#neutral_dir_path = './data/train/label/neutral'
-#happy_dir_path = './data/train/label/happy'
-#os.mkdir(sad_dir_path)
-#os.mkdir(angry_dir_path)
-#os.mkdir(neutral_dir_path)
-#os.mkdir(happy_dir_path)
 
 # tsvファイルを読み込む
 train_data_csv = pd.read_csv('./data/train_master.tsv', sep='\t')
