@@ -12,7 +12,6 @@ import os
 from PIL import Image
 
 
-
 # set machine resource
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print(device)
@@ -21,7 +20,8 @@ print(device)
 # define preprocessing
 transform = transforms.Compose([
     transforms.ToTensor(),
-    transforms.Resize((128, 128))
+    transforms.Resize((128, 128)),
+    transforms.Grayscale()
 ])
 
 
@@ -39,18 +39,28 @@ batch_size = 8
 train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 
+# 画像の確認
+data_iter = iter(train_dataloader)
+imgs, labels = data_iter.next()
+print(labels[0])
+img = imgs[0]
+print(img.shape)
+
+
 # label name
 emotion_name = ('sad', 'angry', 'neutral', 'happy')
 num_classes = len(emotion_name)
 
 # define model structure
+
+
 class CNN(nn.Module):
     def __init__(self, num_classes):
         super().__init__()
 
         # 特徴抽出層
         self.features = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=64, kernel_size=5, padding=2),
+            nn.Conv2d(in_channels=1, out_channels=64, kernel_size=5, padding=2),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2),
 
@@ -70,7 +80,7 @@ class CNN(nn.Module):
 
     def forward(self, x):
         x = self.features(x)
-        x = x.view(x.size(0), -1)
+        x = x.view(x.size(0), -1)  # (batch, 8*8*128)
         x = self.classifier(x)
         return x
 
@@ -133,66 +143,51 @@ for epoch in range(num_epochs):
     print(f'epoch: {epoch}, loss: {running_loss}, acc: {running_acc}, val_loss: {val_running_loss}, val_acc: {val_running_acc}')
 
 
-## graph result →　function
-#x = [x for x in range(len(losses))]  # x axis
+# graph result →　function
+# x = [x for x in range(len(losses))]  # x axis
 #accs_list = []
-#for acc in accs:
+# for acc in accs:
 #    acc = acc.item()  # get float variable from torch.tensor variable
 #    accs_list.append(acc)
 #
 #val_accs_list = []
-#for acc in val_accs:
+# for acc in val_accs:
 #    acc = acc.item()  # get float variable from torch.tensor variable
 #    val_accs_list.append(acc)
 #
 #plt.plot(x, losses, label='loss', color='b')
 #plt.plot(x, val_losses, label='val_loss', color='c')
-#plt.legend()
-#plt.savefig('./logs/pytorch/loss.png')
-#plt.close()
+# plt.legend()
+# plt.savefig('./logs/pytorch/loss.png')
+# plt.close()
 #
 #plt.plot(x, accs_list, label='acc', color='r')
 #plt.plot(x, val_accs_list, label='val_acc', color='m')
-#plt.legend()
-#plt.savefig('./logs/pytorch/acc.png')
-#plt.close()
+# plt.legend()
+# plt.savefig('./logs/pytorch/acc.png')
+# plt.close()
 #print('save graph finished')
 
 
-# save model
-model_path = '../logs/model.pth'
-torch.save(model.state_dict(), model_path)
-
-# load model
-model.load_state_dict(torch.load(model_path))
-model.eval()
-
-# make test images to torch.tensor
-#ファイル数
-#ファイル数だけ読み込みループ
-#    read image
-#    前処理
-#    推論
-#    csvファイルに書き込む
-#
-#file_length = 
 data_dir = '../data/test'
 search_pattern = '*.jpg'
 image_path_list = glob.glob(os.path.join(data_dir, search_pattern))
-# preprocessing
-transform = transforms.Compose([
-    transforms.PILToTensor(),
-    transforms.Resize((128, 128))
-    ])
 images = []
+
+
+# inference mode
+model.eval()
+# define preprocessing
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Resize((128, 128)),
+])
 for image_path in image_path_list:
     img = Image.open(image_path)
     img_tensor = transform(img)
+    img_tensor = img_tensor.to(device)  # on GPU
     output = model(img_tensor)
     print(output)
     pred = torch.argmax(output, dim=1)
     print(pred)
     exit()
-    
-
-
