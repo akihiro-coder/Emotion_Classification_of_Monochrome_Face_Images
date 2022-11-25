@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python train_torch.py
+python ./pytorch_ver/train.py

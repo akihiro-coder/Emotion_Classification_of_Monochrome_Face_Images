@@ -26,7 +26,7 @@ transform = transforms.Compose([
 
 
 # prepare dataset
-dataset = datasets.ImageFolder('./data/train/label', transform=transform)
+dataset = datasets.ImageFolder('../data/train/label', transform=transform)
 
 # split dataset to train data and validation data
 n_samples = len(dataset)
@@ -159,9 +159,8 @@ for epoch in range(num_epochs):
 #print('save graph finished')
 
 
-
 # save model
-model_path = 'model.pth'
+model_path = '../logs/model.pth'
 torch.save(model.state_dict(), model_path)
 
 # load model
@@ -177,11 +176,11 @@ model.eval()
 #    csvファイルに書き込む
 #
 #file_length = 
-data_dir = './data/test'
+data_dir = '../data/test'
 search_pattern = '*.jpg'
 image_path_list = glob.glob(os.path.join(data_dir, search_pattern))
 # preprocessing
-trainsform = transforms.Compose([
+transform = transforms.Compose([
     transforms.PILToTensor(),
     transforms.Resize((128, 128))
     ])
