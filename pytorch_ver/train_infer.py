@@ -44,7 +44,7 @@ data_iter = iter(train_dataloader)
 imgs, labels = data_iter.next()
 print(labels[0])
 img = imgs[0]
-print(img.shape)
+print(img.shape)  # torch.tensor([1,128,128])
 
 
 # label name
@@ -104,7 +104,7 @@ val_accs = []
 
 
 # train loop
-num_epochs = 3
+num_epochs = 10
 for epoch in range(num_epochs):
     # train loop
     running_loss = 0.0
@@ -143,7 +143,7 @@ for epoch in range(num_epochs):
     print(f'epoch: {epoch}, loss: {running_loss}, acc: {running_acc}, val_loss: {val_running_loss}, val_acc: {val_running_acc}')
 
 
-# graph result →　function
+# graph result →　function化したい
 # x = [x for x in range(len(losses))]  # x axis
 #accs_list = []
 # for acc in accs:
