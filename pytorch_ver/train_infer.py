@@ -103,7 +103,6 @@ val_losses = []
 val_accs = []
 
 
-# train loop
 num_epochs = 10
 for epoch in range(num_epochs):
     # train loop
@@ -143,7 +142,7 @@ for epoch in range(num_epochs):
     print(f'epoch: {epoch}, loss: {running_loss}, acc: {running_acc}, val_loss: {val_running_loss}, val_acc: {val_running_acc}')
 
 
-# graph result →　function化したい
+# graph result
 # x = [x for x in range(len(losses))]  # x axis
 #accs_list = []
 # for acc in accs:
@@ -190,4 +189,3 @@ for image_path in image_path_list:
     print(output)
     pred = torch.argmax(output, dim=1)
     print(pred)
-    exit()
